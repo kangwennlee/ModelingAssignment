@@ -12,7 +12,7 @@ package modelingassignment;
 public class Counter {
     private String serverStatus;
     private double areaServerStatus;
-    private int serviceTime;
+    private int serviceEndTime;
     private static int counterNumber = 0;
     private int counterNo;
     
@@ -54,15 +54,15 @@ public class Counter {
     /**
      * @return the serviceTime
      */
-    public int getServiceTime() {
-        return serviceTime;
+    public int getServiceEndTime() {
+        return serviceEndTime;
     }
 
     /**
-     * @param serviceTime the serviceTime to set
+     * @param serviceEndTime the serviceTime to set
      */
-    public void setServiceTime(int serviceTime) {
-        this.serviceTime = serviceTime;
+    public void setServiceEndTime(int serviceEndTime) {
+        this.serviceEndTime = serviceEndTime;
     }
 
     /**
