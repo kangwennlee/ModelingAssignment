@@ -36,7 +36,7 @@ public class ModelingAssignment {
         initializeRandomNumber();
         initializeSimulation();
         simulate();
-        report();
+        //report();
     }
 
     public static void initializeSimulation() {
@@ -126,7 +126,7 @@ public class ModelingAssignment {
         /* Schedule next arrival. */
         time_next_event[1] = sim_time + randomInterarrival();
         /* Check to see whether server is busy. */
-        while(idle==false && server<=3)
+        while(idle==false && server<3)
         {
             if(server_status[server]==BUSY)
                 server++;
