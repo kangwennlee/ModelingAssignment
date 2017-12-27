@@ -271,9 +271,6 @@ the total delay accumulator. */
         interArrivalTime = Acceptance.generateInterarrivalTime(CUST_SERVED);
         //System.out.println(interArrivalTime);
         //printFrequency(interArrivalTime);
-        waitingTime = Acceptance.generateWaitingTime(CUST_SERVED);
-        //System.out.println(waitingTime);
-        //printFrequency(waitingTime);
         serviceTime = Acceptance.generateServiceTime(CUST_SERVED);
         //System.out.println(serviceTime);
         //printFrequency(serviceTime);

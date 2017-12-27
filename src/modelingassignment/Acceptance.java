@@ -35,7 +35,7 @@ public class Acceptance {
         Zcurrent = Z0;
         a = 5;
         c = 3;
-        m = 16; 
+        m = 200; 
         numOfRandomVariates = 20;
         numOfRandomNumbersUsed = 0;
         poissonVariates = new int[numOfRandomVariates];
@@ -46,26 +46,11 @@ public class Acceptance {
         Queue<Integer> q = new LinkedList<>();
         Z0 = 7;
         Zcurrent = Z0;
-        a = 20;
-        c = 3;
-        m = 19;
-        numOfRandomNumbersUsed = 0;
-        lambda = 0.91;
-        for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
-            q.add(generateRandomVariates());
-        }
-        return q;
-    }
-    
-    public static Queue<Integer> generateWaitingTime(int numOfRandomVariates){
-        Queue<Integer> q = new LinkedList<>();
-        Z0 = 7;
-        Zcurrent = Z0;
         a = 5;
         c = 3;
         m = 16;
         numOfRandomNumbersUsed = 0;
-        lambda = 1.12;
+        lambda = 0.91;
         for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
             q.add(generateRandomVariates());
         }

@@ -18,7 +18,7 @@ public class User implements Comparable<User>{
     private int serviceEndTime;
     private int serviceTime;
     private int waitingTime;
-    private Counter counterServiced;
+    private Counter servicingCounter;
 
 public User(){
     numberOfUser++;
@@ -27,10 +27,15 @@ public User(){
 
     @Override
     public String toString() {
-        return "User{" + "userNo=" + userNo + ", interarrivalTime=" + interArrivalTime + 
-                ", arrivalTime=" + arrivalTime + ", serviceBeginTime=" + serviceBeginTime + 
-                ", serviceEndTime=" + serviceEndTime + 
-                ", serviceTime=" + serviceTime + ", waitingTime=" + waitingTime + '}';
+        return "User{" + 
+                "userNo=" + userNo + 
+                ", interarrivalTime=" + interArrivalTime + 
+                ", arrivalTime=" + arrivalTime + 
+                ", waitingTime=" + waitingTime +
+                ", serviceBeginTime=" + serviceBeginTime + 
+                ", serviceTime=" + serviceTime +
+                ", serviceEndTime=" + serviceEndTime+ 
+                '}';
     } 
 
     @Override
@@ -151,17 +156,17 @@ public User(){
     }
 
     /**
-     * @return the counterServiced
+     * @return the servicingCounter
      */
-    public Counter getCounterServiced() {
-        return counterServiced;
+    public Counter getServicingCounter() {
+        return servicingCounter;
     }
 
     /**
-     * @param counterServiced the counterServiced to set
+     * @param servicingCounter the servicingCounter to set
      */
-    public void setCounterServiced(Counter counterServiced) {
-        this.counterServiced = counterServiced;
+    public void setServicingCounter(Counter servicingCounter) {
+        this.servicingCounter = servicingCounter;
     }
     
 }

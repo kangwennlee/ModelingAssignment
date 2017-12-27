@@ -16,31 +16,39 @@ import java.util.LinkedList;
 public class CinemaTicketing {
     //random generated time
     static Queue<Integer> interArrivalTime;
-    static Queue<Integer> waitingTime;
     static Queue<Integer> serviceTime;
     
     //constants
     
     //stopping condition
-    static int NUM_CUST_SERVED = 150;
-    static int NUM_OF_COUNTER = 3;
+    final static int NUM_CUST_SERVED = 150;
+    final static int NUM_OF_COUNTER = 2;
     
     //lists and queue
-    PriorityQueueInterface<Event> eventList = new PriorityLinkedQueue<>();
-    LinkedList<User> allUser = new LinkedList<>();
-    LinkedList<Event> allEvent = new LinkedList<>();
-    Queue<User> serviceQueue = new LinkedList<>();
-    Counter[] counter = new Counter[NUM_OF_COUNTER];
+    static PriorityQueueInterface<Event> eventList = new PriorityLinkedQueue<>();
+    static LinkedList<User> allUser = new LinkedList<>();
+    static LinkedList<Event> allEvent = new LinkedList<>();
+    static Queue<User> serviceQueue = new LinkedList<>();
+    static Counter[] counter = new Counter[NUM_OF_COUNTER];
     
     
-    int simulationTime;
+    static int simulationTime = 0;
 
     public static void main(String[] args) {
         initializeRandomNumber();
-        
+        initialize();
+        scheduleNextUser();
+        simulate();
+        //printEventList();
+    }
+    
+    public static void printEventList(){
+        for(int i =0;i<allEvent.size();i++){
+            System.out.println(allEvent.get(i));
+        }
     }
 
-    public void scheduleNextUser() {
+    public static void scheduleNextUser() {
         User user = new User();
         user.setInterArrivalTime(randomInterarrival());
         user.setArrivalTime(simulationTime+user.getInterArrivalTime());
@@ -49,46 +57,54 @@ public class CinemaTicketing {
         allUser.add(user);
         allEvent.add(event);
         eventList.enqueue(event);
-        System.out.println("Scheduled arrival event for next user " + user.toString());
+        System.out.println("Scheduled arrival event for user " + user.getUserNo());
         System.out.println(event);
     }
     
     
-    public void simulate(){
+    public static void simulate(){
         while(allUser.size()<=NUM_CUST_SERVED && eventList.size()!=0){
             Event nextEvent = eventList.dequeue();
             simulationTime = nextEvent.getEventTime();
             if(nextEvent.getType()=="Arrival"){
                 arrive(nextEvent.getUser());
             }else if(nextEvent.getType()=="Service"){
-                startService(nextEvent.getUser());
+                startService();
             }else{
                 depart(nextEvent.getUser());
             }
         }
     }
     
-    public void arrive(User user){
+    public static void initialize(){
+        for(int i=0;i<NUM_OF_COUNTER;i++){
+            counter[i]= new Counter();
+            counter[i].setServiceTime(0);
+        }
+    }
+    
+    public static void arrive(User user){
+        scheduleNextUser();
         serviceQueue.add(user);
-        System.out.println("user" + user.getUserNo() + "enter queue");
+        System.out.println("user " + user.getUserNo() + " enter queue");
+        scheduleEnterServiceEvent(user);
+    }
+    
+    public static void scheduleEnterServiceEvent(User user){
         user.setWaitingTime(getMinimumWaitingTime(user));
         user.setServiceBeginTime(user.getArrivalTime()+user.getWaitingTime());
         user.setServiceEndTime(user.getServiceBeginTime()+user.getServiceTime());
         //System.out.println("setting user details" + user.toString());
-        System.out.println(user.getCounterServiced());
+        //System.out.println(user.getCounterServiced());
         //user.getCounterServiced().setServerStatus("busy");
-        scheduleEnterServiceEvent(user);
-    }
-    
-    public void scheduleEnterServiceEvent(User user){
         Event event = new Event("Service",user.getServiceBeginTime(),user);
         allEvent.add(event);
         eventList.enqueue(event);
-        System.out.println("scheduled service event for user " + user.getUserNo());
+        //System.out.println("scheduled service event for user " + user.getUserNo());
         System.out.println(event);
     }
     
-    public int getMinimumWaitingTime(User user){
+    public static int getMinimumWaitingTime(User user){
         int minServiceTime = 9999;
         int serviceTime;
         Counter minCounter = null;
@@ -100,20 +116,38 @@ public class CinemaTicketing {
             }
         }
         //user is waiting for this counter
-        user.setCounterServiced(minCounter);
-        System.out.println("assign user " + user.toString() + "to Counter " +user.getCounterServiced());
+        user.setServicingCounter(minCounter);
+        System.out.println("assign user " + user.getUserNo() + " to Counter " +user.getServicingCounter().getCounterNo());
         return minServiceTime;
     }
     
-    public void startService(User user){
-        serviceQueue.poll();
-        System.out.println("user " + user.toString() + " at counter " + user.getCounterServiced());
+    public static void startService(){
+        User user = serviceQueue.poll();
+        user.getServicingCounter().setServiceTime(user.getServiceTime());
+        user.getServicingCounter().setServerStatus("busy");
+        System.out.println("user " + user.getUserNo() + " at counter " + user.getServicingCounter().getCounterNo());
+        scheduleDepartureEvent(user);
+    }
+    
+    public static void scheduleDepartureEvent(User user){
+        Event event = new Event("Departure",user.getServiceEndTime(),user);
+        allEvent.add(event);
+        eventList.enqueue(event);
+        System.out.println(event);
+    }
+    
+    public static void depart(User user){
+        user.getServicingCounter().setServiceTime(0);
+        user.getServicingCounter().setServerStatus("idle");
     }
 
     public static void initializeRandomNumber() {
-        interArrivalTime = Acceptance.generateInterarrivalTime(100);
-        waitingTime = Acceptance.generateWaitingTime(100);
-        serviceTime = Acceptance.generateServiceTime(100);
+        interArrivalTime = Acceptance.generateInterarrivalTime(NUM_CUST_SERVED*2);
+        System.out.println("Inter Arrival Time: "+interArrivalTime);
+        //printFrequency(interArrivalTime);
+        serviceTime = Acceptance.generateServiceTime(NUM_CUST_SERVED*2);
+        System.out.println("Service Time: "+serviceTime);
+        //printFrequency(serviceTime);
     }
     
     public static int randomInterarrival() {
