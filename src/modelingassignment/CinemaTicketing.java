@@ -21,8 +21,8 @@ public class CinemaTicketing {
 
     //constants
     //stopping condition
-    final static int NUM_CUST_SERVED = 150;
-    final static int NUM_OF_COUNTER = 2;
+    final static int NUM_CUST_SERVED = 302;
+    final static int NUM_OF_COUNTER = 4;
 
     //lists and queue
     static PriorityQueueInterface<Event> eventList = new PriorityLinkedQueue<>();
@@ -39,12 +39,31 @@ public class CinemaTicketing {
         scheduleNextUser();
         simulate();
         //printEventList();
+        calculateStatistics();
     }
     
     public static void printEventList() {
         for (int i = 0; i < allEvent.size(); i++) {
             System.out.println(allEvent.get(i));
         }
+    }
+    
+    public static void calculateStatistics() {
+        double totalWaitingTime = 0.0;
+        double totalServiceTime = 0.0;
+        double totalInterArrivalTime = 0.0;
+        double averageWaitingTime;
+        double averageServiceTime;
+        double averageInterArrivalTime;
+        for (int i = 1; i < NUM_CUST_SERVED; i++) {
+            totalWaitingTime += allUser.get(i).getWaitingTime();
+            totalServiceTime += allUser.get(i).getServiceTime();
+            totalInterArrivalTime += allUser.get(i).getInterArrivalTime();
+        }
+        averageWaitingTime = (totalWaitingTime/NUM_CUST_SERVED);
+        averageServiceTime = (totalServiceTime/NUM_CUST_SERVED);
+        averageInterArrivalTime = (totalInterArrivalTime/NUM_CUST_SERVED);
+        System.out.print("Average Waiting Time: "+averageWaitingTime + "\nAverage Service Time: "+ averageServiceTime + "\nAverage InterArrival Time: "+ averageInterArrivalTime+"\n");
     }
     
     public static void printServiceQueue() {
@@ -60,7 +79,6 @@ public class CinemaTicketing {
         user.setArrivalTime(simulationTime + user.getInterArrivalTime());
         user.setServiceTime(randomService());
         Event event = new Event("Arrival", user.getArrivalTime(), user);
-        allUser.add(user);
         allEvent.add(event);
         eventList.enqueue(event);
         System.out.println("Schedule arrival event for user " + user.getUserNo());
@@ -104,11 +122,9 @@ public class CinemaTicketing {
             user.setWaitingTime(0);
         user.setServiceBeginTime(user.getArrivalTime() + user.getWaitingTime());
         user.setServiceEndTime(user.getServiceBeginTime() + user.getServiceTime());
-        //System.out.println("setting user details" + user.toString());
-        //System.out.println(user.getCounterServiced());
-        //user.getCounterServiced().setServerStatus("busy");
         Event event = new Event("Service", user.getServiceBeginTime(), user);
         allEvent.add(event);
+        allUser.add(user);
         eventList.enqueue(event);
         //System.out.println("scheduled service event for user " + user.getUserNo());
         System.out.println(event);
@@ -136,7 +152,7 @@ public class CinemaTicketing {
     
     public static void startService() {
         User user = serviceQueue.poll();
-        System.out.println("user " + user.getUserNo() + " at counter " + user.getServicingCounter().getCounterNo() + " on " + user.getServiceBeginTime());
+        System.out.println("user " + user.getUserNo() + " at counter " + user.getServicingCounter().getCounterNo() + " on time " + user.getServiceBeginTime());
         scheduleDepartureEvent(user);
     }
     

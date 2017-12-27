@@ -44,11 +44,11 @@ public class Acceptance {
     
     public static Queue<Integer> generateInterarrivalTime(int numOfRandomVariates){
         Queue<Integer> q = new LinkedList<>();
-        Z0 = 7;
+        Z0 = 2;
         Zcurrent = Z0;
         a = 5;
-        c = 3;
-        m = 16;
+        c = 4;
+        m = 196;
         numOfRandomNumbersUsed = 0;
         lambda = 0.91;
         for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
@@ -59,13 +59,13 @@ public class Acceptance {
     
     public static Queue<Integer> generateServiceTime(int numOfRandomVariates){
         Queue<Integer> q = new LinkedList<>();
-        Z0 = 7;
+        Z0 = 5;
         Zcurrent = Z0;
-        a = 5;
-        c = 3;
-        m = 16;
+        a = 9;
+        c = 24;
+        m = 444;
         numOfRandomNumbersUsed = 0;
-        lambda = 2.23;
+        lambda = 2;
         for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
             q.add(generateRandomVariates());
         }
