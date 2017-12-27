@@ -1,0 +1,7 @@
+
+*.properties
+/dist/
+build/classes/.netbeans_automatic_build
+build/classes/.netbeans_update_resources
+*.ini
+*.class
