@@ -17,6 +17,7 @@ public class CinemaTicketingPriority {
     //random generated time
     static LinkedList<Integer> interArrivalTime;
     static LinkedList<Integer> serviceTime;
+    static LinkedList<Double> arrive_late;
 
     //constants
     //stopping condition
@@ -34,20 +35,44 @@ public class CinemaTicketingPriority {
     
     public static void initializeRandomNumber() {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
+        //
+        //Initialize for Inter Arrival Time for 3 Counter + Priority Queue Scenario
         Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
+        //Acceptance.initialize(37, 333, 83, 88, NUM_CUST_SERVED, 0.91);
+        //Acceptance.initialize(61, 149, 37, 128, NUM_CUST_SERVED, 0.91);
+        //Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
+        //Acceptance.initialize(17, 37, 9, 64, NUM_CUST_SERVED, 0.91);
+        //
         interArrivalTime = Acceptance.generateTime();
-        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
+        //
+        //Initialize for Service Time for 3 Counter + Priority Queue Scenario
         Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
+        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.23);
+        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.23);
+        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
+        //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.23);
+        //
         serviceTime = Acceptance.generateTime();
+        //
+        //Initialize for Arrive late probability for 3 Counter + Priority Queue Scenario
+        //lambda is not needed.
+        Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 1);
+        //
+        arrive_late = Acceptance.generateRandomNumber();
     }
     
     public static void main(String[] args) {
         initializeRandomNumber();
         initialize();
         scheduleNextUser();
-        simulate();
+        //simulate();
         //printEventList();
-        calculateStatistics();
+        //calculateStatistics();
+        //PointEstimate.calculatePointEstimate();
     }
 
     public static void printEventList() {
@@ -86,6 +111,7 @@ public class CinemaTicketingPriority {
         user.setInterArrivalTime(randomInterarrival());
         user.setArrivalTime(simulationTime + user.getInterArrivalTime());
         user.setServiceTime(randomService());
+        user.setArrive_late(randomArriveLate());
         Event event = new Event("Arrival", user.getArrivalTime(), user);
         allEvent.add(event);
         eventList.enqueue(event);
@@ -185,6 +211,10 @@ public class CinemaTicketingPriority {
     public static int randomService() {
         /* Random number generator for service time */
         return serviceTime.poll();
+    }
+    
+    public static double randomArriveLate(){
+        return arrive_late.poll();
     }
 
 }

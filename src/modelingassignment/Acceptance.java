@@ -56,6 +56,16 @@ public class Acceptance {
         return q;
     }
     
+    public static LinkedList<Double> generateRandomNumber(){
+        LinkedList<Double> q = new LinkedList<>();
+        double[] randNumber = generateRandomNumbersLCGDouble();
+        for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
+            q.add(randNumber[i]);
+        }
+        ChiSquareTest.test(randNumber);
+        return q;
+    }
+    
     public static int generateRandomVariates(){
         //Step 1: set n = 0; P = 1;
         int n = 0;

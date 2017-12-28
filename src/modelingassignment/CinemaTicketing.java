@@ -35,29 +35,30 @@ public class CinemaTicketing {
     public static void initializeRandomNumber() {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         //
-        //4 Counter Scenario
+        //4 Counter Scenario Initialization for Inter Arrival Time
         //Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
         //Acceptance.initialize(37, 333, 83, 88, NUM_CUST_SERVED, 0.91);
         //Acceptance.initialize(61, 149, 37, 128, NUM_CUST_SERVED, 0.91);
         //Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
         Acceptance.initialize(17, 37, 9, 64, NUM_CUST_SERVED, 0.91);
         //
-        //
         interArrivalTime = Acceptance.generateTime();
         //
-        //4 Counter Scenario
+        //4 Counter Scenario Initialization for Service Time
         //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.23);
         //
-        //3 Counter + 10% faster Service Time Scenario
+        //
+        //3 Counter + 10% faster Service Time Scenario Initialization for Service Time
         //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.007);
         //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.007);
         //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.007);
         //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.007);
         Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.007);
+        //
         serviceTime = Acceptance.generateTime();
     }
     
@@ -67,7 +68,8 @@ public class CinemaTicketing {
         scheduleNextUser();
         simulate();
         //printEventList();
-        calculateStatistics();
+        calculateStatistics(); //Calculate average waiting time, average service time and average inter arrival time
+        //PointEstimate.calculatePointEstimate();
     }
 
     public static void printEventList() {
@@ -103,21 +105,22 @@ public class CinemaTicketing {
 
     public static void scheduleNextUser() {
         User user = new User();
-        user.setInterArrivalTime(randomInterarrival());
-        user.setArrivalTime(simulationTime + user.getInterArrivalTime());
-        user.setServiceTime(randomService());
-        Event event = new Event("Arrival", user.getArrivalTime(), user);
+        user.setInterArrivalTime(randomInterarrival()); //assign a random interarrival time to the user
+        user.setArrivalTime(simulationTime + user.getInterArrivalTime()); //set the arrival time
+        user.setServiceTime(randomService()); //assign a random service time to the user
+        Event event = new Event("Arrival", user.getArrivalTime(), user); //create an arrival event for the user
         allEvent.add(event);
-        eventList.enqueue(event);
+        eventList.enqueue(event); //add the event into the event list
         System.out.println("Schedule arrival event for user " + user.getUserNo());
         System.out.println(event);
         System.out.println("");
     }
 
     public static void simulate() {
+        //run the simulation until the simulation time reach 360 minutes, which is 6 hours.
         while (simulationTime < 360) {
-            Event nextEvent = eventList.dequeue();
-            simulationTime = nextEvent.getEventTime();
+            Event nextEvent = eventList.dequeue(); //dequeue the event out from the eventList
+            simulationTime = nextEvent.getEventTime(); //update simulationTime
             if (nextEvent.getType() == "Arrival") {
                 arrive(nextEvent.getUser());
             } else if (nextEvent.getType() == "Service") {
@@ -137,16 +140,19 @@ public class CinemaTicketing {
 
     public static void arrive(User user) {
         scheduleNextUser();
-        serviceQueue.add(user);
+        serviceQueue.add(user); //add user into the service queue
         System.out.println("Add user " + user.getUserNo() + " into queue");
         printServiceQueue();
         System.out.println("");
-        scheduleEnterServiceEvent(user);
+        scheduleEnterServiceEvent(user); //after the user arrive, create a service event for the user
     }
 
     public static void scheduleEnterServiceEvent(User user) {
-        user.setWaitingTime(getMinServiceTime(user) - user.getArrivalTime());
+        user.setWaitingTime(getMinServiceTime(user) - user.getArrivalTime()); 
         if (user.getWaitingTime() < 0) {
+            //If the user arrive later after all the counter end their service,
+            //waiting time will be negative, arrival time > last user's service end time
+            //thus reset user's waiting time to 0
             user.setWaitingTime(0);
         }
         user.setServiceBeginTime(user.getArrivalTime() + user.getWaitingTime());
@@ -161,6 +167,7 @@ public class CinemaTicketing {
     }
 
     public static int getMinServiceTime(User user) {
+        //call getMinServiceTime to retrive next earliest possible service start time for the user.
         int minNextServiceTimeStart = 9999;
         int nextServiceTimeStart = 0;
         Counter minCounter = null;
@@ -172,7 +179,7 @@ public class CinemaTicketing {
                 minCounter = counter[i];
             }
         }
-        //user is waiting for this counter
+        //user is assigned to this counter
         minCounter.setServiceEndTime(minNextServiceTimeStart + user.getServiceTime());
         user.setServicingCounter(minCounter);
         System.out.println("assign user " + user.getUserNo() + " to Counter " + user.getServicingCounter().getCounterNo());

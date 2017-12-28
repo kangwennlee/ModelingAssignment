@@ -19,6 +19,7 @@ public class User implements Comparable<User>{
     private int serviceTime;
     private int waitingTime;
     private Counter servicingCounter;
+    private double arrive_late;
 
 public User(){
     numberOfUser++;
@@ -167,6 +168,20 @@ public User(){
      */
     public void setServicingCounter(Counter servicingCounter) {
         this.servicingCounter = servicingCounter;
+    }
+
+    /**
+     * @return the arrive_late
+     */
+    public double getArrive_late() {
+        return arrive_late;
+    }
+
+    /**
+     * @param arrive_late the arrive_late to set
+     */
+    public void setArrive_late(double arrive_late) {
+        this.arrive_late = arrive_late;
     }
     
 }
