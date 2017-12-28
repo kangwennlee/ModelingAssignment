@@ -1,5 +1,0 @@
-modelingassignment.event
-modelingassignment.fel
-modelingassignment.queue
-modelingassignment.Practical3
-modelingassignment.state

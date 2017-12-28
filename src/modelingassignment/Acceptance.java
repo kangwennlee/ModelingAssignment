@@ -42,8 +42,8 @@ public class Acceptance {
         lambda = 1;
     }
     
-    public static Queue<Integer> generateInterarrivalTime(int numOfRandomVariates){
-        Queue<Integer> q = new LinkedList<>();
+    public static LinkedList<Integer> generateInterarrivalTime(int numOfRandomVariates){
+        LinkedList<Integer> q = new LinkedList<>();
         Z0 = 2;
         Zcurrent = Z0;
         a = 5;
@@ -54,11 +54,12 @@ public class Acceptance {
         for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
             q.add(generateRandomVariates());
         }
+        printFrequency();
         return q;
     }
     
-    public static Queue<Integer> generateServiceTime(int numOfRandomVariates){
-        Queue<Integer> q = new LinkedList<>();
+    public static LinkedList<Integer> generateServiceTime(int numOfRandomVariates){
+        LinkedList<Integer> q = new LinkedList<>();
         Z0 = 5;
         Zcurrent = Z0;
         a = 9;
@@ -102,6 +103,10 @@ public class Acceptance {
         else return(n * factorial(n-1));    
     }
     
+    public static void printFrequency(){
+        
+    }
+    
     public static void printArray(int[] numbers){
         System.out.print("[");
         for (int i=0;i<(numbers.length-1);i++)
@@ -113,4 +118,53 @@ public class Acceptance {
         return String.format("%1$.2f",val);
     }
     
+    public static void validateLCG(){
+        int primeNumber = primeNumber();
+        
+        if(GCD(m,c)==1 && m%4==0 && (a-1)%4==0 && (a-1)%primeNumber==0){
+            System.out.println("full period!");
+        }else{
+            System.out.println("not full period!");
+        }
+    }
+    
+    public static int GCD(int num1, int num2){
+        if(num2==0)
+            return num1;
+        return GCD(num2,num1%num2);
+    }
+    
+    public static int primeNumber(){
+        int i=0;
+       int num =0;
+       int y=0;
+       int primeNumbers[] = new int[150];
+
+       for (i = 1; i <= 100; i++)         
+       { 		  	  
+          int counter=0; 	  
+          for(num =i; num>=1; num--)
+	  {
+             if(i%num==0)
+	     {
+ 		counter = counter + 1;
+	     }
+	  }
+	  if (counter ==2)
+	  {
+	     //Appended the Prime number to the String
+	     primeNumbers[y] = i;
+             y++;
+	  }
+       }
+       
+       
+       for(int z=0;z<primeNumbers.length;z++){
+            if(m%primeNumbers[z]==0)
+                return primeNumbers[z];
+            else
+                return 0;
+        }
+       return 0;
+    }
 }

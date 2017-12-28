@@ -16,12 +16,12 @@ import java.util.LinkedList;
 public class CinemaTicketing {
 
     //random generated time
-    static Queue<Integer> interArrivalTime;
-    static Queue<Integer> serviceTime;
+    static LinkedList<Integer> interArrivalTime;
+    static LinkedList<Integer> serviceTime;
 
     //constants
     //stopping condition
-    final static int NUM_CUST_SERVED = 302;
+    final static int NUM_CUST_SERVED = 300;
     final static int NUM_OF_COUNTER = 4;
 
     //lists and queue
@@ -169,10 +169,10 @@ public class CinemaTicketing {
     }
     
     public static void initializeRandomNumber() {
-        interArrivalTime = Acceptance.generateInterarrivalTime(NUM_CUST_SERVED * 2);
+        interArrivalTime = Acceptance.generateInterarrivalTime(NUM_CUST_SERVED+2);
         //System.out.println("Inter Arrival Time: "+interArrivalTime);
         //printFrequency(interArrivalTime);
-        serviceTime = Acceptance.generateServiceTime(NUM_CUST_SERVED * 2);
+        serviceTime = Acceptance.generateServiceTime(NUM_CUST_SERVED+2);
         //System.out.println("Service Time: "+serviceTime);
         //printFrequency(serviceTime);
     }
