@@ -6,7 +6,6 @@
 package modelingassignment;
 
 import ADT.*;
-import java.util.Queue;
 import java.util.LinkedList;
 
 /**
@@ -21,7 +20,7 @@ public class CinemaTicketing {
 
     //constants
     //stopping condition
-    final static int NUM_CUST_SERVED = 300;
+    final static int NUM_CUST_SERVED = 362;
     final static int NUM_OF_COUNTER = 4;
 
     //lists and queue
@@ -55,7 +54,7 @@ public class CinemaTicketing {
         double averageWaitingTime;
         double averageServiceTime;
         double averageInterArrivalTime;
-        for (int i = 1; i < NUM_CUST_SERVED; i++) {
+        for (int i = 0; i < allUser.size(); i++) {
             totalWaitingTime += allUser.get(i).getWaitingTime();
             totalServiceTime += allUser.get(i).getServiceTime();
             totalInterArrivalTime += allUser.get(i).getInterArrivalTime();
@@ -87,7 +86,7 @@ public class CinemaTicketing {
     }
     
     public static void simulate() {
-        while (allUser.size() <= NUM_CUST_SERVED && eventList.size() != 0) {
+        while (simulationTime<360) {
             Event nextEvent = eventList.dequeue();
             simulationTime = nextEvent.getEventTime();
             if (nextEvent.getType() == "Arrival") {
@@ -169,10 +168,12 @@ public class CinemaTicketing {
     }
     
     public static void initializeRandomNumber() {
-        interArrivalTime = Acceptance.generateInterarrivalTime(NUM_CUST_SERVED+2);
+        Acceptance.initialize(7, 5, 3, 100, NUM_CUST_SERVED, 1.0);
+        interArrivalTime = Acceptance.generateTime();
         //System.out.println("Inter Arrival Time: "+interArrivalTime);
         //printFrequency(interArrivalTime);
-        serviceTime = Acceptance.generateServiceTime(NUM_CUST_SERVED+2);
+        Acceptance.initialize(7, 5, 3, 200, NUM_CUST_SERVED, 2.0);
+        serviceTime = Acceptance.generateTime();
         //System.out.println("Service Time: "+serviceTime);
         //printFrequency(serviceTime);
     }

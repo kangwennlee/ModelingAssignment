@@ -11,7 +11,6 @@ package modelingassignment;
  */
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Acceptance {
 
@@ -20,8 +19,9 @@ public class Acceptance {
     static int[] poissonVariates; 
     static double lambda;
     
+    
     public static void main(String[] args) {
-        initialize();
+        //initialize();
         for (int i=0; i<poissonVariates.length;i++){ //generate number of variates that follows Poisson distribution
             poissonVariates[i] = generateRandomVariates();
         }
@@ -30,46 +30,24 @@ public class Acceptance {
         System.out.println("Total random numbers used: " + numOfRandomNumbersUsed);
     }
     
-    public static void initialize(){
-        Z0 = 7;
+    public static void initialize(int z0, int a1, int c1, int m1, int numOfRandomVariates1,double lamda){
+        Z0 = z0;
         Zcurrent = Z0;
-        a = 5;
-        c = 3;
-        m = 200; 
-        numOfRandomVariates = 20;
+        a = a1;
+        c = c1;
+        m = m1; 
+        numOfRandomVariates = numOfRandomVariates1;
         numOfRandomNumbersUsed = 0;
         poissonVariates = new int[numOfRandomVariates];
-        lambda = 1;
+        lambda = lamda;
     }
     
-    public static LinkedList<Integer> generateInterarrivalTime(int numOfRandomVariates){
+    public static LinkedList<Integer> generateTime(){
         LinkedList<Integer> q = new LinkedList<>();
-        Z0 = 2;
-        Zcurrent = Z0;
-        a = 5;
-        c = 4;
-        m = 196;
-        numOfRandomNumbersUsed = 0;
-        lambda = 0.91;
         for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
             q.add(generateRandomVariates());
         }
-        printFrequency();
-        return q;
-    }
-    
-    public static LinkedList<Integer> generateServiceTime(int numOfRandomVariates){
-        LinkedList<Integer> q = new LinkedList<>();
-        Z0 = 5;
-        Zcurrent = Z0;
-        a = 9;
-        c = 24;
-        m = 444;
-        numOfRandomNumbersUsed = 0;
-        lambda = 2;
-        for (int i=0; i<numOfRandomVariates;i++){ //generate number of variates that follows Poisson distribution
-            q.add(generateRandomVariates());
-        }
+        ChiSquareTest.test(generateRandomNumbersLCGDouble());
         return q;
     }
     
@@ -97,14 +75,24 @@ public class Acceptance {
     public static int generateNextRandomNumbersLCG(){
         return (a * Zcurrent + c) % m; //update new Z 
     }
+    
+    public static double[] generateRandomNumbersLCGDouble(){
+        int[] randomNumbersInteger = new int[numOfRandomVariates];
+        double[] randomNumbers = new double[numOfRandomVariates];
+        randomNumbersInteger[0] = Z0;
+        for (int i = 1;i<randomNumbersInteger.length;i++){
+            randomNumbersInteger[i] = ((a * randomNumbersInteger[i-1] + c) % m);
+        }
+        for(int i=0;i<randomNumbers.length;i++){
+            randomNumbers[i]=((double)randomNumbersInteger[i])/(double)m;
+        }
+        //printArray(randomNumbers);
+        return randomNumbers;
+    }
  
     public static int factorial(int n){    
         if (n == 0) return 1;    
         else return(n * factorial(n-1));    
-    }
-    
-    public static void printFrequency(){
-        
     }
     
     public static void printArray(int[] numbers){
