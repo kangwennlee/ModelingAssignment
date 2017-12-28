@@ -22,7 +22,7 @@ public class Acceptance {
     
     public static void main(String[] args) {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
-        initialize(7,5,3,16,362,1);
+        initialize(5,137,1,256,400,1);
 //        for (int i=0; i<poissonVariates.length;i++){ //generate number of variates that follows Poisson distribution
 //            poissonVariates[i] = generateRandomVariates();
 //        }
@@ -30,7 +30,9 @@ public class Acceptance {
 //        printArray(poissonVariates);
 //        System.out.println("Total random numbers used: " + numOfRandomNumbersUsed);
         validateLCG();
-        ChiSquareTest.test(generateRandomNumbersLCGDouble());
+        double[] randomNumber = generateRandomNumbersLCGDouble();
+        ChiSquareTest.test(randomNumber);
+        //printArray(randomNumber);
     }
     
     public static void initialize(int z0, int a1, int c1, int m1, int numOfRandomVariates1,double lamda){
@@ -103,6 +105,13 @@ public class Acceptance {
         for (int i=0;i<(numbers.length-1);i++)
             System.out.print( numbers[i] + ",");
         System.out.print(numbers[numbers.length-1] + "]\n");
+    }
+    
+    public static void printArray(double[] numbers){
+        System.out.print("[");
+        for (int i=0;i<(numbers.length-1);i++)
+            System.out.print( format(numbers[i]) + ",");
+        System.out.print(format(numbers[numbers.length-1]) + "]\n");
     }
     
     public static String format(double val){

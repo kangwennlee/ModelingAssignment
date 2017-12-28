@@ -12,7 +12,7 @@ import java.util.LinkedList;
  *
  * @author Kangwenn
  */
-public class CinemaTicketing {
+public class CinemaTicketingPriority {
 
     //random generated time
     static LinkedList<Integer> interArrivalTime;
@@ -21,7 +21,7 @@ public class CinemaTicketing {
     //constants
     //stopping condition
     final static int NUM_CUST_SERVED = 400;
-    final static int NUM_OF_COUNTER = 4;
+    final static int NUM_OF_COUNTER = 3;
 
     //lists and queue
     static PriorityQueueInterface<Event> eventList = new PriorityLinkedQueue<>();
@@ -34,30 +34,10 @@ public class CinemaTicketing {
     
     public static void initializeRandomNumber() {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
-        //
-        //4 Counter Scenario
-        //Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(37, 333, 83, 88, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(61, 149, 37, 128, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
-        Acceptance.initialize(17, 37, 9, 64, NUM_CUST_SERVED, 0.91);
-        //
-        //
+        Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
         interArrivalTime = Acceptance.generateTime();
-        //
-        //4 Counter Scenario
-        //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.23);
-        //
-        //3 Counter + 10% faster Service Time Scenario
-        //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.007);
-        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.007);
-        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.007);
-        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.007);
-        Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.007);
+        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
+        Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
         serviceTime = Acceptance.generateTime();
     }
     
