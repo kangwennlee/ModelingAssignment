@@ -35,7 +35,8 @@ public User(){
                 ", waitingTime=" + waitingTime +
                 ", serviceBeginTime=" + serviceBeginTime + 
                 ", serviceTime=" + serviceTime +
-                ", serviceEndTime=" + serviceEndTime+ 
+                ", serviceEndTime=" + serviceEndTime+
+                ", arrivelate="+arrive_late+
                 '}';
     } 
 

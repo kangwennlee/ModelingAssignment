@@ -30,9 +30,10 @@ public class CinemaTicketingPriority {
     static LinkedList<Event> allEvent = new LinkedList<>();
     static LinkedList<User> serviceQueue = new LinkedList<>();
     static Counter[] counter = new Counter[NUM_OF_COUNTER];
+    static Counter priorityCounter = new Counter();
 
     static int simulationTime = 0;
-    
+
     public static void initializeRandomNumber() {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         //
@@ -64,14 +65,14 @@ public class CinemaTicketingPriority {
         //
         arrive_late = Acceptance.generateRandomNumber();
     }
-    
+
     public static void main(String[] args) {
         initializeRandomNumber();
         initialize();
         scheduleNextUser();
-        //simulate();
+        simulate();
         //printEventList();
-        //calculateStatistics();
+        calculateStatistics();
         //PointEstimate.calculatePointEstimate();
     }
 
@@ -135,6 +136,7 @@ public class CinemaTicketingPriority {
     }
 
     public static void initialize() {
+        
         for (int i = 0; i < NUM_OF_COUNTER; i++) {
             counter[i] = new Counter();
             counter[i].setServiceEndTime(1);
@@ -171,11 +173,16 @@ public class CinemaTicketingPriority {
         int nextServiceTimeStart = 0;
         Counter minCounter = null;
         int i;
-        for (i = 0; i < NUM_OF_COUNTER; i++) {
-            nextServiceTimeStart = counter[i].getServiceEndTime();
-            if (nextServiceTimeStart < minNextServiceTimeStart) {
-                minNextServiceTimeStart = nextServiceTimeStart;
-                minCounter = counter[i];
+        if (user.getArrive_late() >= 0.8) {
+            minNextServiceTimeStart = priorityCounter.getServiceEndTime();
+            minCounter = priorityCounter;
+        } else {
+            for (i = 0; i < NUM_OF_COUNTER; i++) {
+                nextServiceTimeStart = counter[i].getServiceEndTime();
+                if (nextServiceTimeStart < minNextServiceTimeStart) {
+                    minNextServiceTimeStart = nextServiceTimeStart;
+                    minCounter = counter[i];
+                }
             }
         }
         //user is waiting for this counter
@@ -212,8 +219,8 @@ public class CinemaTicketingPriority {
         /* Random number generator for service time */
         return serviceTime.poll();
     }
-    
-    public static double randomArriveLate(){
+
+    public static double randomArriveLate() {
         return arrive_late.poll();
     }
 
