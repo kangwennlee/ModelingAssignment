@@ -9,7 +9,8 @@ package modelingassignment;
  *
  * @author Kangwenn
  */
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
+
     private static int numberOfUser = 0;
     private int userNo;
     private int interArrivalTime;
@@ -21,24 +22,24 @@ public class User implements Comparable<User>{
     private Counter servicingCounter;
     private double arrive_late;
 
-public User(){
-    numberOfUser++;
-    this.userNo = numberOfUser;
-}
+    public User() {
+        numberOfUser++;
+        this.userNo = numberOfUser;
+    }
 
     @Override
     public String toString() {
-        return "User{" + 
-                "userNo=" + userNo + 
-                ", interarrivalTime=" + interArrivalTime + 
-                ", arrivalTime=" + arrivalTime + 
-                ", waitingTime=" + waitingTime +
-                ", serviceBeginTime=" + serviceBeginTime + 
-                ", serviceTime=" + serviceTime +
-                ", serviceEndTime=" + serviceEndTime+
-                ", arrivelate="+arrive_late+
-                '}';
-    } 
+        return "User{"
+                + "userNo=" + userNo
+                + ", interarrivalTime=" + interArrivalTime
+                + ", arrivalTime=" + arrivalTime
+                + ", waitingTime=" + waitingTime
+                + ", serviceBeginTime=" + serviceBeginTime
+                + ", serviceTime=" + serviceTime
+                + ", serviceEndTime=" + serviceEndTime
+                + ", arrivelate=" + arrive_late
+                + '}';
+    }
 
     @Override
     public int compareTo(User t) {
@@ -184,5 +185,5 @@ public User(){
     public void setArrive_late(double arrive_late) {
         this.arrive_late = arrive_late;
     }
-    
+
 }

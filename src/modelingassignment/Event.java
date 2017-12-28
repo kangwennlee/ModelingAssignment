@@ -9,12 +9,13 @@ package modelingassignment;
  *
  * @author Kangwenn
  */
-public class Event implements Comparable<Event>{
+public class Event implements Comparable<Event> {
+
     private String type;
     private Integer eventTime;
     private User user;
-    
-    public Event(String type,int eventTime, User user){
+
+    public Event(String type, int eventTime, User user) {
         this.type = type;
         this.eventTime = eventTime;
         this.user = user;
@@ -25,7 +26,6 @@ public class Event implements Comparable<Event>{
         return this.getEventTime().compareTo(t.getEventTime());
     }
 
-    
     @Override
     public String toString() {
         return "Event{" + "type=" + getType() + ", eventTime=" + getEventTime() + ", user=" + getUser() + '}';
@@ -72,5 +72,5 @@ public class Event implements Comparable<Event>{
     public void setUser(User user) {
         this.user = user;
     }
-    
+
 }

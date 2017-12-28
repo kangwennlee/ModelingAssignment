@@ -10,13 +10,15 @@ package modelingassignment;
  * @author Kangwenn
  */
 public class Counter {
+
     private String serverStatus;
     private double areaServerStatus;
     private int serviceEndTime;
     private static int counterNumber = 0;
     private int counterNo;
-    
-    public Counter(){
+    private String counterName;
+
+    public Counter() {
         this.counterNumber++;
         this.counterNo = counterNumber;
         this.serverStatus = "idle";
@@ -77,5 +79,19 @@ public class Counter {
      */
     public void setCounterNo(int counterNo) {
         this.counterNo = counterNo;
+    }
+
+    /**
+     * @return the counterName
+     */
+    public String getCounterName() {
+        return counterName;
+    }
+
+    /**
+     * @param counterName the counterName to set
+     */
+    public void setCounterName(String counterName) {
+        this.counterName = counterName;
     }
 }

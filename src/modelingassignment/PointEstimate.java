@@ -10,20 +10,20 @@ package modelingassignment;
  * @author Kangwenn
  */
 public class PointEstimate {
-    
+
     public static void main(String[] args) {
         //First scenario
-        double[] averageWaitingTime={0.02,0,0,0.005,0.0025};
-        double[] averageServiceTime={2.3125,2.2575,2.3,1.9825,2.0725};
-        double[] averageInterArrivalTime={0.9,0.8975,0.8975,0.9,0.895};
+        double[] averageWaitingTime = {0.02, 0, 0, 0.005, 0.0025};
+        double[] averageServiceTime = {2.3125, 2.2575, 2.3, 1.9825, 2.0725};
+        double[] averageInterArrivalTime = {0.9, 0.8975, 0.8975, 0.9, 0.895};
         //Second scenario
-        //double[] averageWaitingTime={0.02,0,0,0.005,0.0025};
-        //double[] averageServiceTime={2.3125,2.2575,2.3,1.9825,2.0725};
-        //double[] averageInterArrivalTime={0.02,0,0,0.005,0.0025};
+        //double[] averageWaitingTime={0.0025,0,0,0.005,0.0025};
+        //double[] averageServiceTime={2.0075,2.0325,2.0575,1.775,1.7275};
+        //double[] averageInterArrivalTime={0.9,0.8975,0.8975,0.9,0.895};
         //Third scenario
-        //double[] averageWaitingTime={0.02,0,0,0.005,0.0025};
-        //double[] averageServiceTime={2.3125,2.2575,2.3,1.9825,2.0725};
-        //double[] averageInterArrivalTime={0.02,0,0,0.005,0.0025};
+        //double[] averageWaitingTime={0.07,0,0.0275,0.0025,0.0025};
+        //double[] averageServiceTime={2.315,2.2575,2.3,1.9825,2.0725};
+        //double[] averageInterArrivalTime={0.9,0.8975,0.8975,0.9,0.895};
         calculatePointEstimate(averageWaitingTime);
         calculatePointEstimate(averageServiceTime);
         calculatePointEstimate(averageInterArrivalTime);

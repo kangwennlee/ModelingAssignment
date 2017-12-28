@@ -38,30 +38,30 @@ public class CinemaTicketingPriority {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         //
         //Initialize for Inter Arrival Time for 3 Counter + Priority Queue Scenario
-        Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
+        //Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
         //Acceptance.initialize(37, 333, 83, 88, NUM_CUST_SERVED, 0.91);
         //Acceptance.initialize(61, 149, 37, 128, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
+        Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
         //Acceptance.initialize(17, 37, 9, 64, NUM_CUST_SERVED, 0.91);
         //
         interArrivalTime = Acceptance.generateTime();
         //
         //Initialize for Service Time for 3 Counter + Priority Queue Scenario
-        Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
+        //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
+        Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
         //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.23);
         //
         serviceTime = Acceptance.generateTime();
         //
         //Initialize for Arrive late probability for 3 Counter + Priority Queue Scenario
         //lambda is not needed.
-        Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(7, 145, 33, 64, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(7, 133, 37, 72, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(5, 157, 37, 152, NUM_CUST_SERVED, 1);
+        Acceptance.initialize(37, 137, 61, 112, NUM_CUST_SERVED, 1);
+        //Acceptance.initialize(5, 25, 53, 172, NUM_CUST_SERVED, 1);
         //
         arrive_late = Acceptance.generateRandomNumber();
     }
@@ -136,11 +136,12 @@ public class CinemaTicketingPriority {
     }
 
     public static void initialize() {
-        
         for (int i = 0; i < NUM_OF_COUNTER; i++) {
             counter[i] = new Counter();
             counter[i].setServiceEndTime(1);
+            counter[i].setCounterName("Normal Counter");
         }
+        priorityCounter.setCounterName("Priority Counter");
     }
 
     public static void arrive(User user) {
@@ -188,13 +189,13 @@ public class CinemaTicketingPriority {
         //user is waiting for this counter
         minCounter.setServiceEndTime(minNextServiceTimeStart + user.getServiceTime());
         user.setServicingCounter(minCounter);
-        System.out.println("assign user " + user.getUserNo() + " to Counter " + user.getServicingCounter().getCounterNo());
+        System.out.println("assign user " + user.getUserNo() + " to Counter " + user.getServicingCounter().getCounterNo() + " " + user.getServicingCounter().getCounterName());
         return minNextServiceTimeStart;
     }
 
     public static void startService() {
         User user = serviceQueue.poll();
-        System.out.println("user " + user.getUserNo() + " at counter " + user.getServicingCounter().getCounterNo() + " on time " + user.getServiceBeginTime());
+        System.out.println("user " + user.getUserNo() + " at counter " + user.getServicingCounter().getCounterNo() + " " + user.getServicingCounter().getCounterName() + " on time " + user.getServiceBeginTime());
         scheduleDepartureEvent(user);
     }
 

@@ -31,7 +31,7 @@ public class CinemaTicketing {
     static Counter[] counter = new Counter[NUM_OF_COUNTER];
 
     static int simulationTime = 0;
-    
+
     public static void initializeRandomNumber() {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         //
@@ -61,7 +61,7 @@ public class CinemaTicketing {
         //
         serviceTime = Acceptance.generateTime();
     }
-    
+
     public static void main(String[] args) {
         initializeRandomNumber();
         initialize();
@@ -148,7 +148,7 @@ public class CinemaTicketing {
     }
 
     public static void scheduleEnterServiceEvent(User user) {
-        user.setWaitingTime(getMinServiceTime(user) - user.getArrivalTime()); 
+        user.setWaitingTime(getMinServiceTime(user) - user.getArrivalTime());
         if (user.getWaitingTime() < 0) {
             //If the user arrive later after all the counter end their service,
             //waiting time will be negative, arrival time > last user's service end time
