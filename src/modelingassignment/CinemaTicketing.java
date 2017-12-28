@@ -168,10 +168,12 @@ public class CinemaTicketing {
     }
     
     public static void initializeRandomNumber() {
+        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         Acceptance.initialize(7, 5, 3, 100, NUM_CUST_SERVED, 1.0);
         interArrivalTime = Acceptance.generateTime();
         //System.out.println("Inter Arrival Time: "+interArrivalTime);
         //printFrequency(interArrivalTime);
+        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         Acceptance.initialize(7, 5, 3, 200, NUM_CUST_SERVED, 2.0);
         serviceTime = Acceptance.generateTime();
         //System.out.println("Service Time: "+serviceTime);

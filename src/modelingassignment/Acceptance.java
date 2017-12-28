@@ -21,13 +21,16 @@ public class Acceptance {
     
     
     public static void main(String[] args) {
-        //initialize();
-        for (int i=0; i<poissonVariates.length;i++){ //generate number of variates that follows Poisson distribution
-            poissonVariates[i] = generateRandomVariates();
-        }
-        System.out.print("Generate random variates: ");
-        printArray(poissonVariates);
-        System.out.println("Total random numbers used: " + numOfRandomNumbersUsed);
+        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
+        initialize(7,5,3,16,362,1);
+//        for (int i=0; i<poissonVariates.length;i++){ //generate number of variates that follows Poisson distribution
+//            poissonVariates[i] = generateRandomVariates();
+//        }
+//        System.out.print("Generate random variates: ");
+//        printArray(poissonVariates);
+//        System.out.println("Total random numbers used: " + numOfRandomNumbersUsed);
+        validateLCG();
+        ChiSquareTest.test(generateRandomNumbersLCGDouble());
     }
     
     public static void initialize(int z0, int a1, int c1, int m1, int numOfRandomVariates1,double lamda){
