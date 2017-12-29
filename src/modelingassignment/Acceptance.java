@@ -30,6 +30,7 @@ public class Acceptance {
         validateLCG();
         double[] randomNumber = generateRandomNumbersLCGDouble();
         RandomnessTest.chiSquareTest(randomNumber);
+        RandomnessTest.autoCorrelationTest(randomNumber);
         //printArray(randomNumber);
     }
 

@@ -20,7 +20,7 @@ public class CinemaTicketing {
 
     //constants
     //stopping condition
-    final static int NUM_CUST_SERVED = 400;
+    final static int NUM_CUST_GENERATED = 400; //NUMBER OF CUSTOMER GENERATED
     final static int NUM_OF_COUNTER = 4;
 
     //lists and queue
@@ -33,33 +33,20 @@ public class CinemaTicketing {
     static int simulationTime = 0;
 
     public static void initializeRandomNumber() {
-        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         //
-        //4 Counter Scenario Initialization for Inter Arrival Time
-        //Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(37, 333, 83, 88, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(61, 149, 37, 128, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
-        Acceptance.initialize(17, 37, 9, 64, NUM_CUST_SERVED, 0.91);
+        //Use this for simulation of 4 counter
+        //scenario1Random1(2.23);
+        //scenario1Random2(2.23);
+        //scenario1Random3(2.23);
+        //scenario1Random4(2.23);
+        scenario1Random5(2.23);
         //
-        interArrivalTime = Acceptance.generateTime();
-        //
-        //4 Counter Scenario Initialization for Service Time
-        //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.23);
-        //
-        //
-        //3 Counter + 10% faster Service Time Scenario Initialization for Service Time
-        //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.007);
-        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.007);
-        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.007);
-        //Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.007);
-        Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.007);
-        //
-        serviceTime = Acceptance.generateTime();
+        //Use this for simulation of 10% faster service time
+        //scenario1Random1(2.007);
+        //scenario1Random2(2.007);
+        //scenario1Random3(2.007);
+        //scenario1Random4(2.007);
+        //scenario1Random5(2.007);
     }
 
     public static void main(String[] args) {
@@ -70,19 +57,24 @@ public class CinemaTicketing {
         //printEventList();
         printUserList();
         calculateStatistics(); //Calculate average waiting time, average service time and average inter arrival time
-        //PointEstimate.calculatePointEstimate();
     }
 
-    public static void printEventList() {
+    public static void printEventList() {   
         for (int i = 0; i < allEvent.size(); i++) {
             System.out.println(allEvent.get(i));
         }
     }
     
     public static void printUserList() {
+        System.out.println("=========================================================================="); // header
+        System.out.println("---  No of   --- Arrival --- Time Service --- Service --- Time service ---"); // header
+        System.out.println("--- Customer ---  Time   ---    Begin     ---   Time  ---      ends    ---"); // header
+        System.out.println("=========================================================================="); // header
+        
         for (int i = 0; i < allUser.size(); i++) {
-            System.out.println(allUser.get(i));
+            System.out.printf("--- %8d --- %7d --- %12d --- %7d --- %12d ---\n",allUser.get(i).getUserNo(), allUser.get(i).getArrivalTime(), allUser.get(i).getServiceBeginTime(), allUser.get(i).getServiceTime(), allUser.get(i).getServiceEndTime());
         }
+        System.out.println("=========================================================================="); // footer
     }
 
     public static void calculateStatistics() {
@@ -219,6 +211,38 @@ public class CinemaTicketing {
     public static int randomService() {
         /* Random number generator for service time */
         return serviceTime.poll();
+    }
+    
+    public static void scenario1Random1(double lamda){
+        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
+        Acceptance.initialize(7, 5, 3, 64, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(37, 21, 15, 64, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+    }
+    public static void scenario1Random2(double lamda){
+        Acceptance.initialize(37, 333, 83, 88, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(5, 137, 1, 256, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+    }
+    public static void scenario1Random3(double lamda){
+        Acceptance.initialize(61, 149, 37, 128, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(37, 29, 7, 128, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+    }
+    public static void scenario1Random4(double lamda){
+        Acceptance.initialize(23, 245, 61, 64, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(49, 117, 29, 128, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+    }
+    public static void scenario1Random5(double lamda){
+        Acceptance.initialize(17, 37, 9, 64, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(17, 85, 21, 256, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
     }
 
 }

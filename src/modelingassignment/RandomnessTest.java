@@ -10,9 +10,39 @@ package modelingassignment;
  * @author Kangwenn
  */
 public class RandomnessTest {
-    
-    public static void autoCorrelationTest(double[] randNumber){
-        
+
+    public static void autoCorrelationTest(double[] randNumber) {
+        int i = 3;
+        int l = 5;
+        int N = randNumber.length;
+        int M = 0;
+        double[] temp = new double[(N - i) / l + 1];
+        double P = 0;
+        double delta = 0;
+        double Z0 = 0;
+        double total = 0;
+        double alpha = 1.96;
+
+        M = ((N - i) / l) - 1;
+        temp[0] += randNumber[i - 1];
+        int everyl = i - 1 + l;
+        for (int k = 1; k <= (N - i) / l; k++) {
+            temp[k] = randNumber[everyl];
+            everyl += l;
+        }
+
+        for (int j = 0; j < temp.length - 1; j++) {
+            total += temp[j] * temp[j + 1];
+        }
+        P = ((((double) 1 / (M + 1)) * total) - 0.25);
+        //P = ((0.2* total) - 0.25);
+        delta = Math.sqrt(13 * M + 7) / (12 * (M + 1));
+        Z0 = P / delta;
+        if (Z0 < alpha) {
+            System.out.println(Z0 + " < " + alpha + ". The hypothesis of independence cannot be rejected");
+        } else {
+            System.out.println(Z0 + " > " + alpha + ". The hypothesis of independence is rejected");
+        }
     }
 
     //public static double[] randNumber = {0.34,0.90,0.25,0.89,0.87,0.44,0.12,0.21,0.46,0.67,0.83,0.76,0.79,0.64,0.70,0.81,0.94,0.74,0.22,0.74,0.96,0.99,0.77,0.67,0.56,0.41,0.52,0.73,0.99,0.02,0.47,0.30,0.17,0.82,0.56,0.05,0.45,0.31,0.78,0.05,0.79,0.71,0.23,0.19,0.82,0.93,0.65,0.37,0.39,0.42};

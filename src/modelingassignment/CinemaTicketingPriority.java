@@ -21,7 +21,7 @@ public class CinemaTicketingPriority {
 
     //constants
     //stopping condition
-    final static int NUM_CUST_SERVED = 400;
+    final static int NUM_CUST_GENERATED = 400;
     final static int NUM_OF_COUNTER = 3;
 
     //lists and queue
@@ -35,35 +35,14 @@ public class CinemaTicketingPriority {
     static int simulationTime = 0;
 
     public static void initializeRandomNumber() {
-        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         //
-        //Initialize for Inter Arrival Time for 3 Counter + Priority Queue Scenario
-        //Acceptance.initialize(7, 5, 3, 64, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(37, 333, 83, 88, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(61, 149, 37, 128, NUM_CUST_SERVED, 0.91);
-        Acceptance.initialize(23, 245, 61, 64, NUM_CUST_SERVED, 0.91);
-        //Acceptance.initialize(17, 37, 9, 64, NUM_CUST_SERVED, 0.91);
+        //Use this for simulation of 3 normal counter and one priority counter
+        //scenario1Random1(2.23);
+        //scenario1Random2(2.23);
+        scenario1Random3(2.23);
+        //scenario1Random4(2.23);
+        //scenario1Random5(2.23);
         //
-        interArrivalTime = Acceptance.generateTime();
-        //
-        //Initialize for Service Time for 3 Counter + Priority Queue Scenario
-        //Acceptance.initialize(37, 21, 15, 64, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(5, 137, 1, 256, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(37, 29, 7, 128, NUM_CUST_SERVED, 2.23);
-        Acceptance.initialize(49, 117, 29, 128, NUM_CUST_SERVED, 2.23);
-        //Acceptance.initialize(17, 85, 21, 256, NUM_CUST_SERVED, 2.23);
-        //
-        serviceTime = Acceptance.generateTime();
-        //
-        //Initialize for Arrive late probability for 3 Counter + Priority Queue Scenario
-        //lambda is not needed.
-        //Acceptance.initialize(7, 145, 33, 64, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(7, 133, 37, 72, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(5, 157, 37, 152, NUM_CUST_SERVED, 1);
-        Acceptance.initialize(37, 137, 61, 112, NUM_CUST_SERVED, 1);
-        //Acceptance.initialize(5, 25, 53, 172, NUM_CUST_SERVED, 1);
-        //
-        arrive_late = Acceptance.generateRandomNumber();
     }
 
     public static void main(String[] args) {
@@ -72,14 +51,27 @@ public class CinemaTicketingPriority {
         scheduleNextUser();
         simulate();
         //printEventList();
+        //printUserList();
         calculateStatistics();
-        //PointEstimate.calculatePointEstimate();
+        
     }
 
     public static void printEventList() {
         for (int i = 0; i < allEvent.size(); i++) {
             System.out.println(allEvent.get(i));
         }
+    }
+    
+    public static void printUserList() {
+        System.out.println("=========================================================================="); // header
+        System.out.println("---  No of   --- Arrival --- Time Service --- Service --- Time service ---"); // header
+        System.out.println("--- Customer ---  Time   ---    Begin     ---   Time  ---      ends    ---"); // header
+        System.out.println("=========================================================================="); // header
+        
+        for (int i = 0; i < allUser.size(); i++) {
+            System.out.printf("--- %8d --- %7d --- %12d --- %7d --- %12d ---\n",allUser.get(i).getUserNo(), allUser.get(i).getArrivalTime(), allUser.get(i).getServiceBeginTime(), allUser.get(i).getServiceTime(), allUser.get(i).getServiceEndTime());
+        }
+        System.out.println("=========================================================================="); // footer
     }
 
     public static void calculateStatistics() {
@@ -223,6 +215,48 @@ public class CinemaTicketingPriority {
 
     public static double randomArriveLate() {
         return arrive_late.poll();
+    }
+    
+    public static void scenario1Random1(double lamda){
+        //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
+        Acceptance.initialize(7, 5, 3, 64, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(37, 21, 15, 64, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+        Acceptance.initialize(7, 145, 33, 64, NUM_CUST_GENERATED, 1);
+        arrive_late = Acceptance.generateRandomNumber();
+    }
+    public static void scenario1Random2(double lamda){
+        Acceptance.initialize(37, 333, 83, 88, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(5, 137, 1, 256, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+        Acceptance.initialize(7, 133, 37, 72, NUM_CUST_GENERATED, 1);
+        arrive_late = Acceptance.generateRandomNumber();
+    }
+    public static void scenario1Random3(double lamda){
+        Acceptance.initialize(61, 149, 37, 128, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(37, 29, 7, 128, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+        Acceptance.initialize(17, 101, 23, 100, NUM_CUST_GENERATED, 1);
+        arrive_late = Acceptance.generateRandomNumber();
+    }
+    public static void scenario1Random4(double lamda){
+        Acceptance.initialize(23, 245, 61, 64, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(49, 117, 29, 128, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+        Acceptance.initialize(37, 137, 61, 112, NUM_CUST_GENERATED, 1);
+        arrive_late = Acceptance.generateRandomNumber();
+    }
+    public static void scenario1Random5(double lamda){
+        Acceptance.initialize(17, 37, 9, 64, NUM_CUST_GENERATED, 0.91);
+        interArrivalTime = Acceptance.generateTime();
+        Acceptance.initialize(17, 85, 21, 256, NUM_CUST_GENERATED, lamda);
+        serviceTime = Acceptance.generateTime();
+        Acceptance.initialize(5, 25, 53, 172, NUM_CUST_GENERATED, 1);
+        arrive_late = Acceptance.generateRandomNumber();
     }
 
 }
