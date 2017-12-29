@@ -68,6 +68,7 @@ public class CinemaTicketing {
         scheduleNextUser();
         simulate();
         //printEventList();
+        printUserList();
         calculateStatistics(); //Calculate average waiting time, average service time and average inter arrival time
         //PointEstimate.calculatePointEstimate();
     }
@@ -75,6 +76,12 @@ public class CinemaTicketing {
     public static void printEventList() {
         for (int i = 0; i < allEvent.size(); i++) {
             System.out.println(allEvent.get(i));
+        }
+    }
+    
+    public static void printUserList() {
+        for (int i = 0; i < allUser.size(); i++) {
+            System.out.println(allUser.get(i));
         }
     }
 
@@ -90,9 +97,9 @@ public class CinemaTicketing {
             totalServiceTime += allUser.get(i).getServiceTime();
             totalInterArrivalTime += allUser.get(i).getInterArrivalTime();
         }
-        averageWaitingTime = (totalWaitingTime / NUM_CUST_SERVED);
-        averageServiceTime = (totalServiceTime / NUM_CUST_SERVED);
-        averageInterArrivalTime = (totalInterArrivalTime / NUM_CUST_SERVED);
+        averageWaitingTime = (totalWaitingTime / allUser.size());
+        averageServiceTime = (totalServiceTime / allUser.size());
+        averageInterArrivalTime = (totalInterArrivalTime / allUser.size());
         System.out.print("Average Waiting Time: " + averageWaitingTime + "\nAverage Service Time: " + averageServiceTime + "\nAverage InterArrival Time: " + averageInterArrivalTime + "\n");
     }
 

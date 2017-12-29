@@ -94,9 +94,9 @@ public class CinemaTicketingPriority {
             totalServiceTime += allUser.get(i).getServiceTime();
             totalInterArrivalTime += allUser.get(i).getInterArrivalTime();
         }
-        averageWaitingTime = (totalWaitingTime / NUM_CUST_SERVED);
-        averageServiceTime = (totalServiceTime / NUM_CUST_SERVED);
-        averageInterArrivalTime = (totalInterArrivalTime / NUM_CUST_SERVED);
+        averageWaitingTime = (totalWaitingTime / allUser.size());
+        averageServiceTime = (totalServiceTime / allUser.size());
+        averageInterArrivalTime = (totalInterArrivalTime / allUser.size());
         System.out.print("Average Waiting Time: " + averageWaitingTime + "\nAverage Service Time: " + averageServiceTime + "\nAverage InterArrival Time: " + averageInterArrivalTime + "\n");
     }
 

@@ -29,7 +29,7 @@ public class Acceptance {
 //        System.out.println("Total random numbers used: " + numOfRandomNumbersUsed);
         validateLCG();
         double[] randomNumber = generateRandomNumbersLCGDouble();
-        ChiSquareTest.test(randomNumber);
+        RandomnessTest.chiSquareTest(randomNumber);
         //printArray(randomNumber);
     }
 
@@ -50,7 +50,9 @@ public class Acceptance {
         for (int i = 0; i < numOfRandomVariates; i++) { //generate number of variates that follows Poisson distribution
             q.add(generateRandomVariates());
         }
-        ChiSquareTest.test(generateRandomNumbersLCGDouble());
+        double[] randNumber = generateRandomNumbersLCGDouble();
+        RandomnessTest.chiSquareTest(randNumber);
+        RandomnessTest.autoCorrelationTest(randNumber);
         return q;
     }
 
@@ -60,7 +62,8 @@ public class Acceptance {
         for (int i = 0; i < numOfRandomVariates; i++) { //generate number of variates that follows Poisson distribution
             q.add(randNumber[i]);
         }
-        ChiSquareTest.test(randNumber);
+        RandomnessTest.chiSquareTest(randNumber);
+        RandomnessTest.autoCorrelationTest(randNumber);
         return q;
     }
 
