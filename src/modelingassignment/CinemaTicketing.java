@@ -24,10 +24,10 @@ public class CinemaTicketing {
     final static int NUM_OF_COUNTER = 4;
 
     //lists and queue
-    static PriorityQueueInterface<Event> eventList = new PriorityLinkedQueue<>();
-    static LinkedList<User> allUser = new LinkedList<>();
-    static LinkedList<Event> allEvent = new LinkedList<>();
-    static LinkedList<User> serviceQueue = new LinkedList<>();
+    static PriorityQueueInterface<Event> eventList = new PriorityLinkedQueue<>(); //event will be added into this queue and dequeued to call event
+    static LinkedList<User> allUser = new LinkedList<>(); //user created will be added into this list
+    static LinkedList<Event> allEvent = new LinkedList<>(); //all event created will be added into this list
+    static LinkedList<User> serviceQueue = new LinkedList<>(); //all user that is in the queue will be added into this queue to be serviced
     static Counter[] counter = new Counter[NUM_OF_COUNTER];
 
     static int simulationTime = 0;
@@ -38,8 +38,8 @@ public class CinemaTicketing {
         //scenario1Random1(2.23);
         //scenario1Random2(2.23);
         //scenario1Random3(2.23);
-        //scenario1Random4(2.23);
-        scenario1Random5(2.23);
+        scenario1Random4(2.23);
+        //scenario1Random5(2.23);
         //
         //Use this for simulation of 10% faster service time
         //scenario1Random1(2.007);
@@ -66,15 +66,15 @@ public class CinemaTicketing {
     }
     
     public static void printUserList() {
-        System.out.println("=========================================================================="); // header
-        System.out.println("---  No of   --- Arrival --- Time Service --- Service --- Time service ---"); // header
-        System.out.println("--- Customer ---  Time   ---    Begin     ---   Time  ---      ends    ---"); // header
-        System.out.println("=========================================================================="); // header
+        System.out.println("======================================================================================"); // header
+        System.out.println("---  No of   --- Arrival --- Time Service --- Service --- Time service --- Counter ---"); // header
+        System.out.println("--- Customer ---  Time   ---    Begin     ---   Time  ---      ends    ---    No   ---"); // header
+        System.out.println("======================================================================================"); // header
         
         for (int i = 0; i < allUser.size(); i++) {
-            System.out.printf("--- %8d --- %7d --- %12d --- %7d --- %12d ---\n",allUser.get(i).getUserNo(), allUser.get(i).getArrivalTime(), allUser.get(i).getServiceBeginTime(), allUser.get(i).getServiceTime(), allUser.get(i).getServiceEndTime());
+            System.out.printf("--- %8d --- %7d --- %12d --- %7d --- %12d --- %7d ---\n",allUser.get(i).getUserNo(), allUser.get(i).getArrivalTime(), allUser.get(i).getServiceBeginTime(), allUser.get(i).getServiceTime(), allUser.get(i).getServiceEndTime(),allUser.get(i).getServicingCounter().getCounterNo());
         }
-        System.out.println("=========================================================================="); // footer
+        System.out.println("======================================================================================"); // footer
     }
 
     public static void calculateStatistics() {

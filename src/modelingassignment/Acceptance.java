@@ -21,12 +21,6 @@ public class Acceptance {
     public static void main(String[] args) {
         //initialize(z0,a,c,m,numberOfRandomNumber,lamda)
         initialize(5, 137, 1, 256, 400, 1);
-//        for (int i=0; i<poissonVariates.length;i++){ //generate number of variates that follows Poisson distribution
-//            poissonVariates[i] = generateRandomVariates();
-//        }
-//        System.out.print("Generate random variates: ");
-//        printArray(poissonVariates);
-//        System.out.println("Total random numbers used: " + numOfRandomNumbersUsed);
         validateLCG();
         double[] randomNumber = generateRandomNumbersLCGDouble();
         RandomnessTest.chiSquareTest(randomNumber);
