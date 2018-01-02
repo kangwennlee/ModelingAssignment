@@ -48,6 +48,7 @@ public class Acceptance {
 
     public static LinkedList<Integer> generateTime() {
         LinkedList<Integer> q = new LinkedList<>();
+        validateLCG();
         for (int i = 0; i < numOfRandomVariates; i++) { //generate number of variates that follows Poisson distribution
             q.add(generateRandomVariates());
         }
@@ -59,6 +60,7 @@ public class Acceptance {
 
     public static LinkedList<Double> generateRandomNumber() {
         LinkedList<Double> q = new LinkedList<>();
+        validateLCG();
         double[] randNumber = generateRandomNumbersLCGDouble();
         for (int i = 0; i < numOfRandomVariates; i++) { //generate number of variates that follows Poisson distribution
             q.add(randNumber[i]);
