@@ -38,14 +38,14 @@ public class CinemaTicketing {
         //scenario1Random1(2.23);
         //scenario1Random2(2.23);
         //scenario1Random3(2.23);
-        scenario1Random4(2.23);
+        //scenario1Random4(2.23);
         //scenario1Random5(2.23);
         //
         //Use this for simulation of 10% faster service time
         //scenario1Random1(2.007);
         //scenario1Random2(2.007);
         //scenario1Random3(2.007);
-        //scenario1Random4(2.007);
+        scenario1Random4(2.007);
         //scenario1Random5(2.007);
     }
 
@@ -84,15 +84,21 @@ public class CinemaTicketing {
         double averageWaitingTime;
         double averageServiceTime;
         double averageInterArrivalTime;
+        double numberOfCustDelayed = 0.0;
+        double probabilityDelayed;
         for (int i = 0; i < allUser.size(); i++) {
             totalWaitingTime += allUser.get(i).getWaitingTime();
             totalServiceTime += allUser.get(i).getServiceTime();
             totalInterArrivalTime += allUser.get(i).getInterArrivalTime();
+            if(allUser.get(i).getWaitingTime()>0){
+                numberOfCustDelayed++;
+            }
         }
+        probabilityDelayed = numberOfCustDelayed/allUser.size();
         averageWaitingTime = (totalWaitingTime / allUser.size());
         averageServiceTime = (totalServiceTime / allUser.size());
         averageInterArrivalTime = (totalInterArrivalTime / allUser.size());
-        System.out.print("Average Waiting Time: " + averageWaitingTime + "\nAverage Service Time: " + averageServiceTime + "\nAverage InterArrival Time: " + averageInterArrivalTime + "\n");
+        System.out.print("Average Waiting Time: " + averageWaitingTime + "\nAverage Service Time: " + averageServiceTime + "\nAverage InterArrival Time: " + averageInterArrivalTime + "\nProbability of Customer Waiting: "+probabilityDelayed+"\n");
     }
 
     public static void printServiceQueue() {

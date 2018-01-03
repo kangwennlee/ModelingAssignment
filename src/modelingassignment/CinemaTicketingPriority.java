@@ -81,15 +81,21 @@ public class CinemaTicketingPriority {
         double averageWaitingTime;
         double averageServiceTime;
         double averageInterArrivalTime;
+        int numberOfCustDelayed = 0;
+        double probabilityDelayed;
         for (int i = 0; i < allUser.size(); i++) {
             totalWaitingTime += allUser.get(i).getWaitingTime();
             totalServiceTime += allUser.get(i).getServiceTime();
             totalInterArrivalTime += allUser.get(i).getInterArrivalTime();
+            if(allUser.get(i).getWaitingTime()>0){
+                numberOfCustDelayed++;
+            }
         }
+        probabilityDelayed = (double)numberOfCustDelayed/allUser.size();
         averageWaitingTime = (totalWaitingTime / allUser.size());
         averageServiceTime = (totalServiceTime / allUser.size());
         averageInterArrivalTime = (totalInterArrivalTime / allUser.size());
-        System.out.print("Average Waiting Time: " + averageWaitingTime + "\nAverage Service Time: " + averageServiceTime + "\nAverage InterArrival Time: " + averageInterArrivalTime + "\n");
+        System.out.print("Average Waiting Time: " + averageWaitingTime + "\nAverage Service Time: " + averageServiceTime + "\nAverage InterArrival Time: " + averageInterArrivalTime + "\nProbability of Customer Waiting: "+probabilityDelayed+"\n");
     }
 
     public static void printServiceQueue() {
